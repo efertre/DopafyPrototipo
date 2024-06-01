@@ -1,7 +1,5 @@
 package start;
 
-import view.FrmPrincipal;
-
 public class StartApp {
 
 	/**
@@ -9,9 +7,8 @@ public class StartApp {
 	 */
 	public static void main(String[] args) {
 		
-		FrmPrincipal frame = new FrmPrincipal();
-		frame.setVisible(true);
-
+		new view.FrmPrincipal();
+		
 	}
 
 }
