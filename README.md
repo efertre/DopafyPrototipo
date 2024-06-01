@@ -1,5 +1,5 @@
 # Dopafy
 
-![Logo del Proyecto](dopafy/assets/icon.png)
+![Logo del Proyecto](DOPAFY/assets/icon.png)
 
 Este es el repositorio para Mi Proyecto Dopafy.
