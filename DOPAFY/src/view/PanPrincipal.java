@@ -22,7 +22,7 @@ public class PanPrincipal extends JPanel {
 
     BufferedImage image = null;
     try {
-      image = ImageIO.read(new File("assets/fondoMP.png"));
+      image = ImageIO.read(new File("resources/images/fondoMPGestion.png"));
     } catch (IOException e) {
       e.printStackTrace();
     }

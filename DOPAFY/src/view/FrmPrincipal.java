@@ -23,7 +23,7 @@ public class FrmPrincipal extends JFrame {
 		setResizable(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("assets/icon.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/icon.png"));
 
 		// Botones de cuadros de confirmación en Español
 		UIManager.put("OptionPane.yesButtonText", "Sí");

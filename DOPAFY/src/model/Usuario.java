@@ -1,11 +1,17 @@
 package model;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-public class Usuario {
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	// Definir constantes para las validaciones
 	private static final int MAX_NOMBRE_LENGTH = 20;
 	private static final int MAX_APELLIDO_LENGTH = 40;
+	public static final short MIN_EDAD = 0;
+	public static final short MAX_EDAD = 120; // Asumiendo una edad m\u00E1xima razonable
 	private static final int MAX_CORREO_LENGTH = 60;
 	private static final int MIN_CONTRASENA_LENGTH = 8;
 	private static final int MAX_CONTRASENA_LENGTH = 30;
@@ -73,8 +79,8 @@ public class Usuario {
 	}
 
 	public void setEdad(short edad) {
-		if (edad < 0) {
-			throw new IllegalArgumentException("La edad no puede ser negativa.");
+		if (edad < MIN_EDAD || edad > MAX_EDAD) {
+			throw new IllegalArgumentException("La edad debe estar entre " + MIN_EDAD + " y " + MAX_EDAD + ".");
 		}
 		this.edad = edad;
 	}
@@ -113,12 +119,14 @@ public class Usuario {
 
 		// La parte local del correo electr\u00F3nico puede contener letras, números y
 		// ciertos caracteres especiales como _, +, &, *, y -.
-		// Puede tener uno o m\u00E1s subdominios separados por puntos, cada uno formado por
+		// Puede tener uno o m\u00E1s subdominios separados por puntos, cada uno formado
+		// por
 		// letras, n\u00FAmeros y guiones.
 		// La extensi\u00F3n de dominio puede contener entre 2 y 7 letras.
-		// El correo electr\u00F3nico debe comenzar con la parte local, seguida de un arroba,
+		// El correo electr\u00F3nico debe comenzar con la parte local, seguida de un
+		// arroba,
 		// y luego el dominio.
-		
+
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 		Pattern pattern = Pattern.compile(emailRegex);
 		return pattern.matcher(email).matches();
