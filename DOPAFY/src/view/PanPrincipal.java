@@ -1,56 +1,98 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 public class PanPrincipal extends JPanel {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /**
-   * Crear un panel que contiene una imagen de fondo
-   * que se redimensiona junto con el JFrame.
-   */
-  public PanPrincipal() {
-    setLayout(new BorderLayout(0, 0));
+	private JLabel lblExit;
+	private JButton btnLogin, btnRegister;
 
-    BufferedImage image = null;
-    try {
-      image = ImageIO.read(new File("resources/images/fondoMPGestion.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+	private FrmPrincipal mainFrame;
 
-    ImagePanel panel = new ImagePanel(image);
-    add(panel);
-  }
+	/**
+	 * Crear un panel que contiene una imagen de fondo que se redimensiona junto con
+	 * el JFrame.
+	 * 
+	 * @param frmPrincipal
+	 */
+	public PanPrincipal(FrmPrincipal frmPrincipal) {
+		this.mainFrame = frmPrincipal;
 
-  private class ImagePanel extends JPanel {
-    private static final long serialVersionUID = 1L;
+		addComponents();
+		addListeners();
 
-    private BufferedImage image;
+		// Revalidar y repintar el panel
+		revalidate();
+		repaint();
+	}
 
-    public ImagePanel(BufferedImage image) {
-      this.image = image;
-    }
+	private void addComponents() {
 
-    @Override
-    protected void paintComponent(Graphics g) {
-      super.paintComponent(g);
-      if (image != null) {
-        int width = getWidth();
-        int height = getHeight();
-        // Escalar la imagen al tamaño del panel
-        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        g.drawImage(scaledImage, 0, 0, null);
-      }
-    }
-  }
+		// Cargar la imagen de fondo del btn
+		ImageIcon iconBtnRegister = new ImageIcon("resources/images/buttons/BTN_REGISTER.png");
+		btnRegister = new JButton("");
+		btnRegister.setOpaque(true);
+		btnRegister.setIcon(iconBtnRegister);
+		btnRegister.setBounds(300, 225, 120, 40);
+		add(btnRegister);
+
+		ImageIcon iconBtnLogin = new ImageIcon("resources/images/buttons/BTN_LOGIN.png");
+		btnLogin = new JButton("");
+		btnLogin.setOpaque(true);
+		btnLogin.setIcon(iconBtnLogin);
+		btnLogin.setBounds(450, 225, 120, 40);
+		add(btnLogin);
+
+		// Etiqueta de salida
+		lblExit = new JLabel("X");
+
+		lblExit.setBounds(873, 0, 30, 30);
+		add(lblExit);
+
+		// Cargar la imagen de fondo
+		ImageIcon iconBackground = new ImageIcon("resources/images/BG_USER.png");
+		setLayout(null);
+
+		// Crear el JLabel con imagen de fondo
+		LabelWithBackground background = new LabelWithBackground(iconBackground);
+		background.setBounds(0, 0, 900, 500);
+		add(background);
+
+	}
+
+	private void addListeners() {
+		CtrlPrincipal ctrl = new CtrlPrincipal();
+
+		// Controlar salida del programa
+		lblExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ctrl.exitQuestion(mainFrame);
+			}
+		});
+
+		// Cambiar al panel de login
+		btnLogin.addActionListener(e -> mainFrame.showPanel("PanLogin"));
+		btnRegister.addActionListener(e -> mainFrame.showPanel("PanRegister"));
+
+		// Agregar el listener para el movimiento del ratón
+		addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				ctrl.animateBackground(e, PanPrincipal.this);
+			}
+		});
+	}
 
 }
