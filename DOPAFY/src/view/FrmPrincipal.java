@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 
 import view.login.PanLogin;
 import view.register.PanRegister;
+import view.user.PanUser;
 
 public class FrmPrincipal extends JFrame {
 
@@ -41,12 +42,14 @@ public class FrmPrincipal extends JFrame {
         PanPrincipal panPrincipal = new PanPrincipal(this);
         PanLogin panLogin = new PanLogin(this);
         PanRegister panRegister = new PanRegister(this);
+        PanUser panUser = new PanUser(this);
 
         // Añadir los paneles al mainPanel
         mainPanel.setLayout(cardLayout);
         mainPanel.add(panPrincipal, "PanPrincipal");
         mainPanel.add(panLogin, "PanLogin");
         mainPanel.add(panRegister, "PanRegister");
+        mainPanel.add(panUser, "PanUser");
 
         // Añadir mainPanel al JFrame
         getContentPane().add(mainPanel, BorderLayout.CENTER);

@@ -95,6 +95,7 @@ public class PanLogin extends JPanel {
 		textPassword.setBounds(100, 60, 180, 30);
 		loginPanel.add(textPassword);
 
+		// Botón iniciar sesión
 		btnLogin = new JButton("");
 		btnLogin.setIcon(iconLogin);
 		btnLogin.setBounds(120, 120, 160, 40);
@@ -153,5 +154,8 @@ public class PanLogin extends JPanel {
 
 			}
 		});
+		
+		// Hay que hacer la validación en la DB antes de entrar al Panel User
+		btnLogin.addActionListener(e -> mainFrame.showPanel("PanUser"));
 	}
 }
