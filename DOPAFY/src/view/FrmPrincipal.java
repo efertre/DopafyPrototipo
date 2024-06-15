@@ -9,64 +9,77 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import view.admin.PanAdmin;
 import view.login.PanLogin;
 import view.register.PanRegister;
+import view.user.DataUser;
 import view.user.PanUser;
 
 public class FrmPrincipal extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private MainBackground mainPanel;
-    private CardLayout cardLayout;
+	private MainBackground mainPanel;
+	private CardLayout cardLayout;
+	
+	private PanUser panUser;
 
-    public FrmPrincipal() {
-        // Desactivar los botones de ventana por defecto
-        setUndecorated(true);
+	public FrmPrincipal() {
+		//
 
-        setTitle("DOPAFY");
-        setSize(900, 500);
-        setResizable(true);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/icon.png"));
+		// Desactivar los botones de ventana por defecto
+		setUndecorated(true);
 
-        // Botones de cuadros de confirmación en Español
-        UIManager.put("OptionPane.yesButtonText", "Sí");
+		setTitle("DOPAFY");
+		setSize(900, 500);
+		setResizable(true);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/icon.png"));
 
-        // Configurar el CardLayout
-        cardLayout = new CardLayout();
-        mainPanel = new MainBackground("resources/images/BG_USER.png"); // Ruta de la imagen de fondo
+		// Botones de cuadros de confirmación en Español
+		UIManager.put("OptionPane.yesButtonText", "Sí");
 
-        // Crear los paneles
-        PanPrincipal panPrincipal = new PanPrincipal(this);
-        PanLogin panLogin = new PanLogin(this);
-        PanRegister panRegister = new PanRegister(this);
-        PanUser panUser = new PanUser(this);
+		// Configurar el CardLayout
+		cardLayout = new CardLayout();
+		mainPanel = new MainBackground("resources/images/BG_USER.png"); // Ruta de la imagen de fondo
 
-        // Añadir los paneles al mainPanel
-        mainPanel.setLayout(cardLayout);
-        mainPanel.add(panPrincipal, "PanPrincipal");
-        mainPanel.add(panLogin, "PanLogin");
-        mainPanel.add(panRegister, "PanRegister");
-        mainPanel.add(panUser, "PanUser");
+		// Crear los paneles
+		PanPrincipal panPrincipal = new PanPrincipal(this);
+		PanLogin panLogin = new PanLogin(this);
+		PanRegister panRegister = new PanRegister(this);
+		panUser = new PanUser(this);
+		PanAdmin panAdmin = new PanAdmin();
 
-        // Añadir mainPanel al JFrame
-        getContentPane().add(mainPanel, BorderLayout.CENTER);
+		// Añadir los paneles al mainPanel
+		mainPanel.setLayout(cardLayout);
+		mainPanel.add(panPrincipal, "PanPrincipal");
+		mainPanel.add(panLogin, "PanLogin");
+		mainPanel.add(panRegister, "PanRegister");
+		mainPanel.add(panUser, "PanUser");
+		mainPanel.add(panAdmin, "PanAdmin");
 
-        // Controlar el cierre de la ventana
-        CtrlPrincipal ctrl = new CtrlPrincipal();
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                ctrl.exitQuestion(FrmPrincipal.this);
-            }
-        });
+		// Añadir mainPanel al JFrame
+		getContentPane().add(mainPanel, BorderLayout.CENTER);
 
-        setVisible(true); // Mostrar la ventana
-    }
+		// Controlar el cierre de la ventana
+		CtrlPrincipal ctrl = new CtrlPrincipal();
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				ctrl.exitQuestion(FrmPrincipal.this);
+			}
+		});
 
-    // Método para cambiar paneles
-    public void showPanel(String panelName) {
-        cardLayout.show(mainPanel, panelName);
-    }
+		setVisible(true); // Mostrar la ventana
+
+	}
+
+	// Método para cambiar paneles
+	public void showPanel(String panelName) {
+		cardLayout.show(mainPanel, panelName);
+		if(panelName.equalsIgnoreCase("PanUser"))
+		panUser.updateUsername(DataUser.loggedInUsername); // Actualizar el nombre de usuario en PanUser
+
+	}
+
 }

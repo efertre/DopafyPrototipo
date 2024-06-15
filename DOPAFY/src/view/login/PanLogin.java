@@ -6,32 +6,41 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.Optional;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import model.Usuario;
 import view.CtrlPrincipal;
 import view.FrmPrincipal;
+import view.user.DataUser;
 
 public class PanLogin extends JPanel {
 	private static final long serialVersionUID = 1L;
+
 	private JButton btnLogin;
 
 	private JLabel background;
 	private JLabel lblExit;
 	private JLabel lblUserName;
-	private JTextField textUsername;
+	public static JTextField textUsername;
 	private JLabel lblUserPass;
-	private JTextField textPassword;
+	private JPasswordField textPassword;
 	private JLabel lblTextRegister;
 
 	private FrmPrincipal mainFrame;
+	private CtrDiaLogin ctrlDiaLogin;
 
 	public PanLogin(FrmPrincipal frmPrincipal) {
 		this.mainFrame = frmPrincipal;
+		this.ctrlDiaLogin = new CtrDiaLogin();
 
 		setLayout(null); // Usamos un layout nulo para posicionar los componentes manualmente
 
@@ -54,16 +63,17 @@ public class PanLogin extends JPanel {
 
 		// Crear etiqueta para navegar hacia el panel de Register
 		lblTextRegister = new JLabel("¿No tienes una cuenta?");
-		lblTextRegister.setBounds(270, 285, 141, 13);
+		lblTextRegister.setBounds(270, 300, 141, 13);
 		add(lblTextRegister);
 
 		// Crear el JLabel con imagen de fondo
 		background = new JLabel(iconBackground);
 		background.setBounds(0, 0, 900, 500);
 		add(background);
+
 		// Crear el panel para los campos de inicio de sesión
 		JPanel loginPanel = new JPanel(null); // Usamos un layout nulo para posicionar los componentes dentro de este
-												// panel
+		// panel
 		loginPanel.setOpaque(false); // Hacer el panel transparente para que se vea la imagen de fondo
 		loginPanel.setBounds(300, 150, 300, 200);
 		background.add(loginPanel);
@@ -75,41 +85,88 @@ public class PanLogin extends JPanel {
 
 		lblUserName = new JLabel("");
 		lblUserName.setIcon(iconUser);
-		lblUserName.setToolTipText("Introduce t\u00FA nombre de usuario");
+		lblUserName.setToolTipText("Introduce tu nombre de usuario");
 		lblUserName.setBounds(70, 25, 16, 16);
 		loginPanel.add(lblUserName);
 
 		textUsername = new JTextField();
-		textUsername.setToolTipText("Introduce t\u00FA nombre de usuario");
+		textUsername.setToolTipText("Introduce tu nombre de usuario");
 		textUsername.setBounds(100, 20, 180, 30);
 		loginPanel.add(textUsername);
 
 		lblUserPass = new JLabel("");
 		lblUserPass.setIcon(iconPassword);
-		lblUserPass.setToolTipText("Introduce t\u00FA contrase\u00f1a");
+		lblUserPass.setToolTipText("Introduce tu contraseña");
 		lblUserPass.setBounds(70, 65, 16, 16);
 		loginPanel.add(lblUserPass);
 
-		textPassword = new JTextField();
-		textPassword.setToolTipText("Introduce t\u00FA contrase\u00f1a");
+		textPassword = new JPasswordField();
+		textPassword.setToolTipText("Introduce tu contraseña");
 		textPassword.setBounds(100, 60, 180, 30);
 		loginPanel.add(textPassword);
+
+		// Checkbox para mostrar/ocultar contraseña
+		JCheckBox chkShowPassword = new JCheckBox("Mostrar contraseña");
+		chkShowPassword.setOpaque(false);
+		chkShowPassword.setBounds(140, 100, 140, 30);
+		loginPanel.add(chkShowPassword);
+		chkShowPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (chkShowPassword.isSelected()) {
+					textPassword.setEchoChar((char) 0); // Mostrar texto plano
+				} else {
+					textPassword.setEchoChar('\u2022'); // Ocultar texto y mostrar puntos
+				}
+			}
+		});
 
 		// Botón iniciar sesión
 		btnLogin = new JButton("");
 		btnLogin.setIcon(iconLogin);
-		btnLogin.setBounds(120, 120, 160, 40);
+		btnLogin.setBounds(120, 140, 160, 40);
 		loginPanel.add(btnLogin);
-
 	}
 
 	private void addListeners() {
-		CtrlPrincipal ctrl = new CtrlPrincipal();
+
+		// Acción del botón de login
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Aquí se debe agregar la lógica para iniciar sesión
+				String username = textUsername.getText();
+				String password = new String(textPassword.getPassword());
+
+				try {
+					Optional<Usuario> user = ctrlDiaLogin.authenticate(username, password);
+					if (user.isPresent()) {
+						Usuario usuario = user.get();
+						DataUser.loggedInUsername = username;
+
+						if (usuario.getEsAdmin()) {
+							mainFrame.showPanel("PanAdmin");
+						} else {
+							mainFrame.showPanel("PanUser");
+
+						}
+					} else {
+						// Mostrar mensaje de error
+						JOptionPane.showMessageDialog(PanLogin.this, "Nombre de usuario o contraseña no válido.",
+								"Error de autenticación", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
+
+		// Acción para redirigir al registro
+		lblTextRegister.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mainFrame.showPanel("PanRegister");
+			}
+		});
+
+		CtrlPrincipal ctrl = new CtrlPrincipal();
 
 		// Agregar el listener para el movimiento del ratón
 		addMouseMotionListener(new MouseMotionListener() {
@@ -151,11 +208,7 @@ public class PanLogin extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mainFrame.showPanel("PanRegister");
-
 			}
 		});
-		
-		// Hay que hacer la validación en la DB antes de entrar al Panel User
-		btnLogin.addActionListener(e -> mainFrame.showPanel("PanUser"));
 	}
 }

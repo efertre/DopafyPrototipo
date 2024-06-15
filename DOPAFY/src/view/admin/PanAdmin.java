@@ -10,14 +10,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class PanGestion extends JPanel {
+public class PanAdmin extends JPanel {
   private static final long serialVersionUID = 1L;
 
   /**
    * Crear un panel que contiene una imagen de fondo
    * que se redimensiona junto con el JFrame.
    */
-  public PanGestion() {
+  public PanAdmin() {
     setLayout(new BorderLayout(0, 0));
 
     BufferedImage image = null;

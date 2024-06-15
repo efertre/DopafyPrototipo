@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import view.CtrlPrincipal;
 import view.FrmPrincipal;
 
@@ -23,7 +25,6 @@ public class PanUser extends JPanel {
 	private JLabel lblWindow;
 	private JLabel lblUserImage;
 	private JLabel lblUserStatus;
-	private JLabel lblUsername;
 
 	// Etiquetas para los iconos del menu
 	private JLabel lblIconProfile, lblIconGoals, lblIconRewards, lblIconSettings;
@@ -41,6 +42,7 @@ public class PanUser extends JPanel {
 	private JLabel lblObjetivos_3;
 	private JLabel lblWindowText;
 	private JLabel lblNewLabel_1;
+	private JLabel lblUsername;
 
 	public PanUser(FrmPrincipal frmPrincipal) {
 		this.mainFrame = frmPrincipal;
@@ -49,6 +51,10 @@ public class PanUser extends JPanel {
 
 		addComponents();
 		addListeners();
+
+		// Revalidar y repintar el panel
+		revalidate();
+		repaint();
 	}
 
 	private void addComponents() {
@@ -90,10 +96,14 @@ public class PanUser extends JPanel {
 		lblUserImage.setBounds(50, 20, 100, 70);
 		add(lblUserImage);
 
-		lblUsername = new JLabel("Nombre de usuario");
+		JPanel panUsername = new JPanel();
+		panUsername.setOpaque(false);
+		panUsername.setBounds(10, 92, 180, 26);
+		add(panUsername);
+
+		lblUsername = new JLabel("USUARIO DESCONOCIDO");
 		lblUsername.setFont(new Font("Arial", Font.BOLD, 10));
-		lblUsername.setBounds(52, 98, 100, 10);
-		add(lblUsername);
+		panUsername.add(lblUsername);
 
 		lblUserStatus = new JLabel("Desconectado");
 		lblUserStatus.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -212,7 +222,7 @@ public class PanUser extends JPanel {
 		panPremios.setBounds(200, 50, 700, 450);
 		add(panPremios);
 		panPremios.setLayout(null);
-		
+
 		lblNewLabel_1 = new JLabel("PRÓXIMAMENTE (necesita estar conectado)");
 		lblNewLabel_1.setBounds(226, 200, 280, 13);
 		panPremios.add(lblNewLabel_1);
@@ -285,5 +295,10 @@ public class PanUser extends JPanel {
 		panAjustes.setVisible(false);
 		panel.setVisible(true);
 		lblWindowText.setText(panelName);
+	}
+
+	public void updateUsername(String username) {
+		lblUsername.setText(username.toUpperCase());
+
 	}
 }

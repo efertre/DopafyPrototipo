@@ -1,4 +1,35 @@
 {
 	"folders": {},
-	"connections": {}
+	"connections": {
+		"msaccess_ucanaccess-1900dc83eb2-596344b3c83f4415": {
+			"provider": "generic",
+			"driver": "msaccess_ucanaccess",
+			"name": "Dopafy.accdb",
+			"save-password": true,
+			"configuration": {
+				"database": "C:\\Users\\welco\\git\\DopafyPrototipo\\DOPAFY\\db\\Dopafy.accdb",
+				"url": "jdbc:ucanaccess://C:\\Users\\welco\\git\\DopafyPrototipo\\DOPAFY\\db\\Dopafy.accdb",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": false,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
+		}
+	}
 }
