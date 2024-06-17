@@ -21,8 +21,9 @@ public class CtrDiaLogin {
 
 				String storedPassword = rs.getString("password");
 				DataUser.userId = rs.getInt("userId");
+				DataUser.loggedInUsername = rs.getString("username");
 				
-				// Validación para comprobar si los datos son exactamente a los guardados en la
+				// Validación para comprobar si la contraseña es exactamente a la guardada en la
 				// base de datos (sensibilidad a la capitalización)
 				if (password.equals(storedPassword)) {
 					Usuario usuario = new Usuario(rs.getInt("userId"), rs.getString("nombre"), rs.getString("email"),

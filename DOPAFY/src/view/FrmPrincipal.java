@@ -22,7 +22,7 @@ public class FrmPrincipal extends JFrame {
 
 	private MainBackground mainPanel;
 	private CardLayout cardLayout;
-	
+
 	private PanUser panUser;
 
 	private PanGoals panGoals = new PanGoals();
@@ -43,7 +43,7 @@ public class FrmPrincipal extends JFrame {
 		// Botones de cuadros de confirmación o negación en Español
 		UIManager.put("OptionPane.yesButtonText", "Sí");
 		UIManager.put("OptionPane.okButtonText", "Aceptar");
-        UIManager.put("OptionPane.cancelButtonText", "Cancelar");
+		UIManager.put("OptionPane.cancelButtonText", "Cancelar");
 
 		// Configurar el CardLayout
 		cardLayout = new CardLayout();
@@ -79,12 +79,14 @@ public class FrmPrincipal extends JFrame {
 
 	}
 
-	// Método para cambiar paneles
+	// Método para cambiar paneles y mantenerlos actualizados
 	public void showPanel(String panelName) {
 		cardLayout.show(mainPanel, panelName);
-		if(panelName.equalsIgnoreCase("PanUser")) {
-		panUser.updateUsername(DataUser.loggedInUsername); // Actualizar el nombre de usuario en PanUser
-		panGoals.updateUserId(DataUser.userId);
+		if (panelName.equalsIgnoreCase("PanUser")) {
+			panUser.updateUsername(DataUser.loggedInUsername); // Actualizar el nombre de usuario en PanUser
+			panUser.updatePanelStats();
+			;
+			panGoals.updateUserId(DataUser.userId);
 		}
 
 	}

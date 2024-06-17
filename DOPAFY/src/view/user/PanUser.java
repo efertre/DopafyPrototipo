@@ -208,6 +208,7 @@ public class PanUser extends JPanel {
 		add(panEstadisticas);
 		panEstadisticas.setBounds(200, 50, 700, 450);
 		panEstadisticas.setVisible(true);
+		
 
 		panObjetivos = new PanGoals();
 		add(panObjetivos);
@@ -284,10 +285,25 @@ public class PanUser extends JPanel {
         if (panel == panObjetivos) {
             panObjetivos.updateUserId(DataUser.userId);
         }
+        
+        if (panel == panEstadisticas) {
+        	try {
+				panEstadisticas.updateUserId(DataUser.userId);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+        }
 	}
 
 	public void updateUsername(String username) {
 		lblUsername.setText(username.toUpperCase());
+		
+	}
+	
+	public void updatePanelStats() {
+		panEstadisticas.updateUserId(DataUser.userId);
 		
 	}
 

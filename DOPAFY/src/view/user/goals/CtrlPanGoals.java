@@ -12,6 +12,7 @@ public class CtrlPanGoals {
 
 	// Método para obtener todos los objetivos de un usuario
 	public List<Object[]> getGoals(int userId) throws Exception {
+		
 		List<Object[]> goals = new ArrayList<>();
 		String sql = "SELECT goalId, descripcion, fechaInicio, progreso, cantidadPuntos, dificultad " + "FROM OBJETIVO "
 				+ "WHERE userId = ?";

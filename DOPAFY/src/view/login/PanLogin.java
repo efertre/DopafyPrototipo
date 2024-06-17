@@ -20,7 +20,6 @@ import javax.swing.JTextField;
 import model.Usuario;
 import view.CtrlPrincipal;
 import view.FrmPrincipal;
-import view.user.DataUser;
 
 public class PanLogin extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -140,8 +139,6 @@ public class PanLogin extends JPanel {
 					Optional<Usuario> user = ctrlDiaLogin.authenticate(username, password);
 					if (user.isPresent()) {
 						Usuario usuario = user.get();
-						DataUser.loggedInUsername = username;
-						
 
 						if (usuario.getEsAdmin()) {
 							mainFrame.showPanel("PanAdmin");
