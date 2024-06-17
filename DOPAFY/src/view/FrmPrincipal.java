@@ -14,6 +14,7 @@ import view.login.PanLogin;
 import view.register.PanRegister;
 import view.user.DataUser;
 import view.user.PanUser;
+import view.user.goals.PanGoals;
 
 public class FrmPrincipal extends JFrame {
 
@@ -23,6 +24,8 @@ public class FrmPrincipal extends JFrame {
 	private CardLayout cardLayout;
 	
 	private PanUser panUser;
+
+	private PanGoals panGoals = new PanGoals();
 
 	public FrmPrincipal() {
 		//
@@ -37,8 +40,10 @@ public class FrmPrincipal extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/icon.png"));
 
-		// Botones de cuadros de confirmación en Español
+		// Botones de cuadros de confirmación o negación en Español
 		UIManager.put("OptionPane.yesButtonText", "Sí");
+		UIManager.put("OptionPane.okButtonText", "Aceptar");
+        UIManager.put("OptionPane.cancelButtonText", "Cancelar");
 
 		// Configurar el CardLayout
 		cardLayout = new CardLayout();
@@ -77,8 +82,10 @@ public class FrmPrincipal extends JFrame {
 	// Método para cambiar paneles
 	public void showPanel(String panelName) {
 		cardLayout.show(mainPanel, panelName);
-		if(panelName.equalsIgnoreCase("PanUser"))
+		if(panelName.equalsIgnoreCase("PanUser")) {
 		panUser.updateUsername(DataUser.loggedInUsername); // Actualizar el nombre de usuario en PanUser
+		panGoals.updateUserId(DataUser.userId);
+		}
 
 	}
 

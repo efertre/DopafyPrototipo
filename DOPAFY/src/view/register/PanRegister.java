@@ -157,7 +157,7 @@ public class PanRegister extends JPanel {
                 String confirmPassword = new String(txtConfirmPassword.getPassword());
                 String email = txtEmail.getText();
 
-                if (username == null || username.length() > Usuario.MAX_USERNAME_LENGTH || !username.matches("^[A-Za-z0-9_]+$")) {
+                if (username == null || username.length() > Usuario.MAX_USERNAME_LENGTH || username.length() < Usuario.MIN_USERNAME_LENGTH || !username.matches("^[A-Za-z0-9_]+$")) {
                 	JOptionPane.showMessageDialog(PanRegister.this, "El nombre de usuario no puede ser nulo, debe tener un mínimo de "
         					+ Usuario.MIN_USERNAME_LENGTH + " y un máximo de " + Usuario.MAX_USERNAME_LENGTH
         					+ " caracteres, no puede contener espacios ni caracteres especiales",

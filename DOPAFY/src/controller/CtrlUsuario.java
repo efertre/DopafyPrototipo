@@ -13,6 +13,7 @@ public class CtrlUsuario {
 	public List<Usuario> getAllUsuarios() throws Exception {
 		List<Usuario> usuarios = new ArrayList<>();
 		String sql = "SELECT * FROM USUARIO";
+		
 		try {
 			DataBase.open();
 			ResultSet rs = DataBase.executeQuery(sql);
@@ -32,6 +33,7 @@ public class CtrlUsuario {
 	// Agregar un nuevo usuario
 	public void addUsuario(Usuario usuario) throws Exception {
 		String sql = "INSERT INTO USUARIO (userId, nombre, email, password, username, esAdmin) VALUES (?, ?, ?, ?, ?, ?)";
+
 		try {
 			DataBase.open();
 			DataBase.executePreparedDML(sql, usuario.getUserId(), usuario.getNombre(), usuario.getEmail(),

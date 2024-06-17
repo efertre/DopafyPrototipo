@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 
 import view.CtrlPrincipal;
 import view.FrmPrincipal;
+import view.user.goals.PanGoals;
+import view.user.rewards.PanRewards;
+import view.user.settings.PanSettings;
+import view.user.statistics.PanStatistics;
 
 public class PanUser extends JPanel {
 
@@ -36,12 +40,13 @@ public class PanUser extends JPanel {
 	private JPanel panMenu, panMenu_1, panMenu_2, panMenu_3;
 
 	// Paneles de contenido
-	private JPanel panEstadisticas, panObjetivos, panPremios, panAjustes;
-	private JLabel lblNewLabel;
-	private JLabel lblObjetivos_1;
-	private JLabel lblObjetivos_3;
+	private PanStatistics panEstadisticas;
+	private PanGoals panObjetivos;
+	private PanRewards panPremios;
+	private PanSettings panAjustes;
+
 	private JLabel lblWindowText;
-	private JLabel lblNewLabel_1;
+
 	private JLabel lblUsername;
 
 	public PanUser(FrmPrincipal frmPrincipal) {
@@ -198,47 +203,25 @@ public class PanUser extends JPanel {
 		lblMenu.setBounds(0, 0, 200, 500);
 		add(lblMenu);
 
-		// Crear paneles de contenido
-		panEstadisticas = new JPanel();
-		panEstadisticas.setBackground(Color.WHITE);
-		panEstadisticas.setBounds(200, 50, 700, 450);
+		// Crear paneles de contenido utilizando las nuevas clases separadas
+		panEstadisticas = new PanStatistics();
 		add(panEstadisticas);
-		panEstadisticas.setLayout(null);
-
-		lblNewLabel = new JLabel("PRÓXIMAMENTE");
-		lblNewLabel.setBounds(290, 200, 140, 13);
-		panEstadisticas.add(lblNewLabel);
-
-		panObjetivos = new JPanel();
-		panObjetivos.setBackground(Color.WHITE);
-		panObjetivos.setBounds(200, 50, 700, 450);
-		add(panObjetivos);
-
-		lblObjetivos_1 = new JLabel("OBJETIVOS");
-		panObjetivos.add(lblObjetivos_1);
-
-		panPremios = new JPanel();
-		panPremios.setBackground(Color.WHITE);
-		panPremios.setBounds(200, 50, 700, 450);
-		add(panPremios);
-		panPremios.setLayout(null);
-
-		lblNewLabel_1 = new JLabel("PRÓXIMAMENTE (necesita estar conectado)");
-		lblNewLabel_1.setBounds(226, 200, 280, 13);
-		panPremios.add(lblNewLabel_1);
-
-		panAjustes = new JPanel();
-		panAjustes.setBackground(Color.WHITE);
-		panAjustes.setBounds(200, 50, 700, 450);
-		add(panAjustes);
-
-		lblObjetivos_3 = new JLabel("AJUSTES");
-		panAjustes.add(lblObjetivos_3);
-
-		// Solo mostrar el panel de estadísticas por defecto
+		panEstadisticas.setBounds(200, 50, 700, 450);
 		panEstadisticas.setVisible(true);
+
+		panObjetivos = new PanGoals();
+		add(panObjetivos);
+		panObjetivos.setBounds(200, 50, 700, 450);
 		panObjetivos.setVisible(false);
+
+		panPremios = new PanRewards();
+		add(panPremios);
+		panPremios.setBounds(200, 50, 700, 450);
 		panPremios.setVisible(false);
+
+		panAjustes = new PanSettings();
+		add(panAjustes);
+		panAjustes.setBounds(200, 50, 700, 450);
 		panAjustes.setVisible(false);
 	}
 
@@ -258,6 +241,7 @@ public class PanUser extends JPanel {
 		// Controlar el hover en las opciones del menu
 		ctrlPU.addMouseListenerToPanel(panMenu);
 		ctrlPU.addMouseListenerToPanel(panMenu_1);
+		// Controlar el hover en las opciones del menu
 		ctrlPU.addMouseListenerToPanel(panMenu_2);
 		ctrlPU.addMouseListenerToPanel(panMenu_3);
 
@@ -295,10 +279,17 @@ public class PanUser extends JPanel {
 		panAjustes.setVisible(false);
 		panel.setVisible(true);
 		lblWindowText.setText(panelName);
+		
+		// Actualizar userId en PanGoals si es necesario
+        if (panel == panObjetivos) {
+            panObjetivos.updateUserId(DataUser.userId);
+        }
 	}
 
 	public void updateUsername(String username) {
 		lblUsername.setText(username.toUpperCase());
-
+		
 	}
+
+	
 }

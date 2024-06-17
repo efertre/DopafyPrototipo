@@ -35,6 +35,8 @@ public class PanLogin extends JPanel {
 	private JPasswordField textPassword;
 	private JLabel lblTextRegister;
 
+	private JCheckBox chkShowPassword;
+
 	private FrmPrincipal mainFrame;
 	private CtrDiaLogin ctrlDiaLogin;
 
@@ -106,19 +108,10 @@ public class PanLogin extends JPanel {
 		loginPanel.add(textPassword);
 
 		// Checkbox para mostrar/ocultar contraseña
-		JCheckBox chkShowPassword = new JCheckBox("Mostrar contraseña");
+		chkShowPassword = new JCheckBox("Mostrar contraseña");
 		chkShowPassword.setOpaque(false);
 		chkShowPassword.setBounds(140, 100, 140, 30);
 		loginPanel.add(chkShowPassword);
-		chkShowPassword.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (chkShowPassword.isSelected()) {
-					textPassword.setEchoChar((char) 0); // Mostrar texto plano
-				} else {
-					textPassword.setEchoChar('\u2022'); // Ocultar texto y mostrar puntos
-				}
-			}
-		});
 
 		// Botón iniciar sesión
 		btnLogin = new JButton("");
@@ -128,7 +121,15 @@ public class PanLogin extends JPanel {
 	}
 
 	private void addListeners() {
-
+		chkShowPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (chkShowPassword.isSelected()) {
+					textPassword.setEchoChar((char) 0); // Mostrar texto plano
+				} else {
+					textPassword.setEchoChar('\u2022'); // Ocultar texto y mostrar puntos
+				}
+			}
+		});
 		// Acción del botón de login
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,6 +141,7 @@ public class PanLogin extends JPanel {
 					if (user.isPresent()) {
 						Usuario usuario = user.get();
 						DataUser.loggedInUsername = username;
+						
 
 						if (usuario.getEsAdmin()) {
 							mainFrame.showPanel("PanAdmin");

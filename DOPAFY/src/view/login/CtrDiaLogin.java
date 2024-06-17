@@ -6,18 +6,22 @@ import java.util.Optional;
 
 import dbm.DataBase;
 import model.Usuario;
+import view.user.DataUser;
 
 public class CtrDiaLogin {
 
 	// Autenticar usuario
 	public Optional<Usuario> authenticate(String username, String password) throws Exception {
 		String sql = "SELECT * FROM USUARIO WHERE username = ?";
+		
 		try {
 			DataBase.open();
 			ResultSet rs = DataBase.executePreparedQuery(sql, username);
 			if (rs.next()) {
 
 				String storedPassword = rs.getString("password");
+				DataUser.userId = rs.getInt("userId");
+				
 				// Validación para comprobar si los datos son exactamente a los guardados en la
 				// base de datos (sensibilidad a la capitalización)
 				if (password.equals(storedPassword)) {
