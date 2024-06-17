@@ -95,7 +95,7 @@ public class PanGoals extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Dificultades y puntos asociados
-				String[] dificultades = { "SENCILLO", "MODERADO", "DIFICIL", "MUY DIFICIL", "ATREVIDO" };
+				String[] dificultades = { "SENCILLO", "MODERADO", "DIFICIL", "RETADOR", "DESAFIANTE" };
 				int[] puntos = { 1, 3, 5, 7, 10 };
 
 				// Crear campos de entrada para el diálogo
@@ -167,7 +167,7 @@ public class PanGoals extends JPanel {
 																								// actual
 
 					// Crear un array con las posibles dificultades
-					String[] dificultades = { "SENCILLO", "MODERADO", "DIFICIL", "MUY DIFICIL", "ATREVIDO" };
+					String[] dificultades = { "SENCILLO", "MODERADO", "DIFICIL", "RETADOR", "DESAFIANTE" };
 					int[] puntos = { 1, 3, 5, 7, 10 };
 
 					// Crear campos de entrada con los valores actuales
@@ -220,8 +220,8 @@ public class PanGoals extends JPanel {
 							// Mostrar mensaje de error
 							JOptionPane.showMessageDialog(PanGoals.this, "Datos editados con valores inválidos.",
 									"Error de edición", JOptionPane.ERROR_MESSAGE); // Manejar cualquier excepción
-																							// que ocurra durante la
-																							// edición
+																					// que ocurra durante la
+																					// edición
 						}
 					}
 				}
@@ -292,6 +292,5 @@ public class PanGoals extends JPanel {
 		loadGoals();
 
 	}
-
 
 }

@@ -5,72 +5,107 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
 
 public class PanSettings extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-    private JLabel background;
+	private static final long serialVersionUID = 1L;
+	private JLabel background;
 
-    public PanSettings() {
-        setBackground(new Color(152, 251, 152));
-        setBounds(200, 50, 700, 450);
-        setVisible(false);
+	private JButton btnChangePassword;
+	private JButton btnHelpManual;
+	private JButton btnLogout;
 
-        addComponents();
+	public PanSettings() {
+		setBackground(new Color(152, 251, 152));
+		setBounds(200, 50, 700, 450);
+		setVisible(false);
 
-        // Revalidar y repintar el panel
-        revalidate();
-        repaint();
-    }
+		addComponents();
 
-    private void addComponents() {
-        // Cargar la imagen de fondo
-        ImageIcon iconBackground = new ImageIcon("resources/images/BG_USER.png");
-        setLayout(null);
+		// Revalidar y repintar el panel
+		revalidate();
+		repaint();
+	}
 
-        JPanel panel = new JPanel();
-        panel.setOpaque(false);
-        panel.setBounds(10, 180, 680, 50);
-        panel.setBackground(new Color(152, 251, 152));
-        add(panel);
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+	private void addComponents() {
+		// Cargar la imagen de fondo
+		ImageIcon iconBackground = new ImageIcon("resources/images/BG_USER.png");
+		setLayout(null);
 
-        JButton btnChangePassword = createButton("Cambiar Contraseña");
-        panel.add(btnChangePassword);
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setBounds(10, 180, 680, 50);
+		panel.setBackground(new Color(152, 251, 152));
+		add(panel);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-        JButton btnHelpManual = createButton("Manual de Ayuda");
-        panel.add(btnHelpManual);
+		btnChangePassword = createButton("Cambiar Contraseña");
+		panel.add(btnChangePassword);
 
-        JButton btnLogout = createButton("Cerrar Sesión");
-        panel.add(btnLogout);
+		btnHelpManual = createButton("Manual de Ayuda");
+		panel.add(btnHelpManual);
 
-        // Crear el JLabel con imagen de fondo
-        background = new JLabel(iconBackground);
-        background.setBounds(0, 0, 700, 450);
-        add(background);
-    }
+		btnLogout = createButton("Cerrar Sesión");
+		panel.add(btnLogout);
 
-    private JButton createButton(String text) {
-        JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(150, 30)); // Tamaño inicial
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setPreferredSize(new Dimension(170, 35)); // Tamaño aumentado
-                button.revalidate(); // Revalidar el botón para aplicar el nuevo tamaño
-            }
+		// Crear el JLabel con imagen de fondo
+		background = new JLabel(iconBackground);
+		background.setBounds(0, 0, 700, 450);
+		add(background);
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.setPreferredSize(new Dimension(150, 30)); // Tamaño original
-                button.revalidate(); // Revalidar el botón para aplicar el tamaño original
-            }
-        });
-        return button;
-    }
+		CtrlSettings ctrl = new CtrlSettings(PanSettings.this);
+		btnHelpManual.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ctrl.showHelpManual(PanSettings.this);
+
+			}
+		});
+		
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ctrl.logout();
+
+			}
+		});
+		
+		btnChangePassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ctrl.handleChangePassword();
+
+			}
+		});
+
+	}
+
+	private JButton createButton(String text) {
+		JButton button = new JButton(text);
+
+		button.setPreferredSize(new Dimension(150, 30)); // Tamaño inicial
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				button.setPreferredSize(new Dimension(170, 35)); // Tamaño aumentado
+				button.revalidate(); // Revalidar el botón para aplicar el nuevo tamaño
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				button.setPreferredSize(new Dimension(150, 30)); // Tamaño original
+				button.revalidate(); // Revalidar el botón para aplicar el tamaño original
+			}
+		});
+		return button;
+	}
+
+	
 }

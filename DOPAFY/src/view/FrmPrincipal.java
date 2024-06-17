@@ -81,6 +81,7 @@ public class FrmPrincipal extends JFrame {
 
 	// Método para cambiar paneles y mantenerlos actualizados
 	public void showPanel(String panelName) {
+
 		cardLayout.show(mainPanel, panelName);
 		if (panelName.equalsIgnoreCase("PanUser")) {
 			panUser.updateUsername(DataUser.loggedInUsername); // Actualizar el nombre de usuario en PanUser

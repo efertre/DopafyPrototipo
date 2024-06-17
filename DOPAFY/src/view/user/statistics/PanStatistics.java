@@ -40,6 +40,7 @@ public class PanStatistics extends JPanel {
 
 	public void updateUserId(int userId2) {
 		this.userId = userId2;
+		System.out.println(userId + userId);
 
 		// Limpiar los componentes existentes antes de actualizar
 		removeAll();
@@ -50,29 +51,35 @@ public class PanStatistics extends JPanel {
 			goalsByDifficulty = ctrl.getGoalsByDifficulty(userId);
 			userPoints = ctrl.getUserPoints(userId);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		// Mostrar los objetivos totales que lleva el usuario
-		totalGoalsLabel = new JLabel("Objetivos totales: " + totalGoals.size());
+		int numTotalGoals = (totalGoals == null) ? 0 : totalGoals.size();
+
+		totalGoalsLabel = new JLabel("Objetivos Totales: " + numTotalGoals);
 		totalGoalsLabel.setBounds(50, 50, 300, 30);
 		totalGoalsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 		add(totalGoalsLabel);
 
 		// Mostrar los objetivos completados
-		completedGoalsLabel = new JLabel("Objetivos Completados: " + completedGoals.size());
+		int numTotalGoalsCompleted = (completedGoals == null) ? 0 : completedGoals.size();
+
+		completedGoalsLabel = new JLabel("Objetivos Completados: " + numTotalGoalsCompleted);
 		completedGoalsLabel.setBounds(50, 100, 300, 30);
 		completedGoalsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 		add(completedGoalsLabel);
 
 		// Mostrar los objetivos por dificultad
 		int yPosition = 150;
-		for (String difficulty : goalsByDifficulty.keySet()) {
-			difficultyLabel = new JLabel("Dificultad " + difficulty + ": " + goalsByDifficulty.get(difficulty));
-			difficultyLabel.setBounds(50, yPosition, 300, 30);
-			difficultyLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-			add(difficultyLabel);
-			yPosition += 50;
+		if (goalsByDifficulty != null) {
+			for (String difficulty : goalsByDifficulty.keySet()) {
+				difficultyLabel = new JLabel("Dificultad " + difficulty + ": " + goalsByDifficulty.get(difficulty));
+				difficultyLabel.setBounds(50, yPosition, 300, 30);
+				difficultyLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+				add(difficultyLabel);
+				yPosition += 50;
+			}
 		}
 
 		// Mostrar los puntos del usuario

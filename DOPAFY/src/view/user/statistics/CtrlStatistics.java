@@ -21,9 +21,9 @@ public class CtrlStatistics {
 		try {
 			DataBase.open(); // Abrir conexión a la base de datos
 			ResultSet rs = DataBase.executePreparedQuery(sql, userId);
-			
 
 			while (rs.next()) {
+
 				String descripcion = rs.getString("descripcion");
 				Timestamp fechaInicio = rs.getTimestamp("fechaInicio");
 				int progreso = rs.getInt("progreso");
@@ -44,7 +44,7 @@ public class CtrlStatistics {
 
 		return completedGoals;
 	}
-	
+
 	public List<Objetivo> getTotalGoals(int userId) throws Exception {
 		List<Objetivo> totalGoals = new ArrayList<>();
 		String sql = "SELECT * FROM OBJETIVO WHERE userId = ?";
@@ -52,7 +52,6 @@ public class CtrlStatistics {
 		try {
 			DataBase.open(); // Abrir conexión a la base de datos
 			ResultSet rs = DataBase.executePreparedQuery(sql, userId);
-			
 
 			while (rs.next()) {
 				String descripcion = rs.getString("descripcion");
@@ -83,7 +82,6 @@ public class CtrlStatistics {
 		try {
 			DataBase.open(); // Abrir conexión a la base de datos
 			ResultSet rs = DataBase.executePreparedQuery(sql, userId);
-			
 
 			while (rs.next()) {
 				String dificultadStr = rs.getString("dificultad");

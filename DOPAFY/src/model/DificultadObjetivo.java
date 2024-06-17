@@ -5,6 +5,6 @@ public enum DificultadObjetivo {
     SENCILLO,
     MODERADO,
     DIFICIL,
-    MUY_DIFICIL,
-    ATREVIDO
+    RETADOR,
+    DESAFIANTE
 }
