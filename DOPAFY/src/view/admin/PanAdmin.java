@@ -34,31 +34,38 @@ import dbm.DataBase;
 import view.CtrlPrincipal;
 import view.FrmPrincipal;
 
+/**
+ * La clase PanAdmin extiende JPanel y representa el panel de administraci\u00F3n
+ * de la aplicaci\u00F3n.
+ * Este panel contiene una tabla para gestionar usuarios y botones para añadir,
+ * editar, eliminar, actualizar y buscar usuarios.
+ */
 public class PanAdmin extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private static DefaultTableModel tableModel;
 
 	private JLabel lblExit;
-
 	private JFrame mainFrame;
-
 	private static CtrlUsuario ctrlUser;
 
 	private JButton btnAdd, btnEdit, btnDelete, btnRefresh, btnSearch;
-
 	private JTextField txtSearchId, txtSearchUsername;
 
+	/**
+	 * Constructor que crea el panel de administraci\u00F3n con una referencia
+	 * al marco principal.
+	 *
+	 * @param frmPrincipal El marco principal de la aplicaci\u00F3n.
+	 */
 	public PanAdmin(FrmPrincipal frmPrincipal) {
 		ctrlUser = new CtrlUsuario();
-
 		this.mainFrame = frmPrincipal;
 		setLayout(new BorderLayout(0, 0));
 
 		// Etiqueta de salida
 		lblExit = new JLabel("X");
 		lblExit.setHorizontalAlignment(SwingConstants.RIGHT);
-
 		lblExit.setBounds(873, 0, 30, 30);
 		add(lblExit, BorderLayout.NORTH);
 
@@ -74,11 +81,11 @@ public class PanAdmin extends JPanel {
 
 		JPanel buttonPanel = new JPanel();
 
-		btnAdd = new JButton("Añadir Usuario");
+		btnAdd = new JButton("A\u00F1adir Usuario");
 		btnEdit = new JButton("Editar Usuario");
 		btnDelete = new JButton("Eliminar Usuario");
-		btnRefresh = new JButton("Actualizar"); 
-		btnSearch = new JButton("Buscar"); 
+		btnRefresh = new JButton("Actualizar");
+		btnSearch = new JButton("Buscar");
 
 		txtSearchId = new JTextField(10);
 		txtSearchUsername = new JTextField(10);
@@ -87,14 +94,14 @@ public class PanAdmin extends JPanel {
 		buttonPanel.add(txtSearchId);
 		buttonPanel.add(new JLabel("Username:"));
 		buttonPanel.add(txtSearchUsername);
-		buttonPanel.add(btnSearch); 
+		buttonPanel.add(btnSearch);
 		buttonPanel.add(btnAdd);
 		buttonPanel.add(btnEdit);
 		buttonPanel.add(btnDelete);
-		buttonPanel.add(btnRefresh); 
+		buttonPanel.add(btnRefresh);
 		add(buttonPanel, BorderLayout.SOUTH);
 
-		String[] columnNames = { "ID", "Nombre", "Email", "Username", "Contraseña", "Es Admin" };
+		String[] columnNames = { "ID", "Nombre", "Email", "Username", "Contrase\u00F1a", "Es Admin" };
 		tableModel = new DefaultTableModel(columnNames, 0);
 		table = new JTable(tableModel);
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -105,8 +112,12 @@ public class PanAdmin extends JPanel {
 		addListeners();
 	}
 
+	/**
+	 * Añade los listeners a los componentes del panel.
+	 */
 	private void addListeners() {
 		CtrlPrincipal ctrl = new CtrlPrincipal();
+
 		// Controlar salida del programa
 		lblExit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -115,6 +126,7 @@ public class PanAdmin extends JPanel {
 			}
 		});
 
+		// Añadir usuario
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -122,6 +134,7 @@ public class PanAdmin extends JPanel {
 			}
 		});
 
+		// Editar usuario
 		btnEdit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -135,6 +148,7 @@ public class PanAdmin extends JPanel {
 			}
 		});
 
+		// Eliminar usuario
 		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -147,31 +161,40 @@ public class PanAdmin extends JPanel {
 					JOptionPane.showMessageDialog(PanAdmin.this, "Por favor, selecciona un usuario para eliminar.");
 				}
 			}
-
 		});
 
+		// Actualizar tabla
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PanAdmin.updateTable();
 			}
 		});
-		
-		 btnSearch.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                String id = txtSearchId.getText().trim();
-	                String username = txtSearchUsername.getText().trim();
-	                ctrlUser.searchUsers(tableModel, id, username);
-	            }
-	        });
+
+		// Buscar usuario
+		btnSearch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String id = txtSearchId.getText().trim();
+				String username = txtSearchUsername.getText().trim();
+				ctrlUser.searchUsers(tableModel, id, username);
+			}
+		});
 	}
 
+	/**
+	 * Actualiza la tabla recargando los datos desde la base de datos.
+	 */
 	private static void updateTable() {
 		ctrlUser.loadUsuarios(tableModel); // Recargar los datos en el modelo de la tabla
 		tableModel.fireTableDataChanged(); // Notificar a la tabla que los datos han cambiado
 	}
 
+	/**
+	 * Muestra un di\u00E1logo para a\u00F1adir o editar un usuario.
+	 *
+	 * @param userId El ID del usuario a editar, o null para a\u00F1adir un nuevo usuario.
+	 */
 	public void showUserDialog(String userId) {
 		JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Usuario", true);
 		dialog.getContentPane().setLayout(new BorderLayout());
@@ -183,7 +206,6 @@ public class PanAdmin extends JPanel {
 		JCheckBox chkEsAdmin = new JCheckBox();
 
 		if (userId != null) {
-
 			String sql = "SELECT * FROM USUARIO WHERE userId = ?";
 			try {
 				DataBase.open();
@@ -208,7 +230,7 @@ public class PanAdmin extends JPanel {
 		panel.add(txtEmail);
 		panel.add(new JLabel("Nombre de Usuario:"));
 		panel.add(txtUsername);
-		panel.add(new JLabel("Contraseña:"));
+		panel.add(new JLabel("Contrase\u00F1a:"));
 		panel.add(txtPassword);
 		panel.add(new JLabel("Es Admin:"));
 		panel.add(chkEsAdmin);
@@ -232,7 +254,6 @@ public class PanAdmin extends JPanel {
 				}
 
 				ctrlUser.loadUsuarios(tableModel);
-
 				dialog.dispose();
 			}
 		});
@@ -255,10 +276,18 @@ public class PanAdmin extends JPanel {
 		dialog.setVisible(true);
 	}
 
+	/**
+	 * Clase interna ImagePanel que extiende JPanel y permite mostrar una imagen de fondo.
+	 */
 	private class ImagePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private BufferedImage image;
 
+		/**
+		 * Constructor que crea un panel con una imagen de fondo.
+		 *
+		 * @param image La imagen de fondo.
+		 */
 		public ImagePanel(BufferedImage image) {
 			this.image = image;
 			setLayout(new BorderLayout());

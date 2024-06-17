@@ -1,0 +1,14 @@
+controller
+dbm
+model
+start
+view
+view.admin
+view.config
+view.login
+view.register
+view.user
+view.user.goals
+view.user.rewards
+view.user.settings
+view.user.statistics

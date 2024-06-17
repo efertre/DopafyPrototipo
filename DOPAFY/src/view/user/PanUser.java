@@ -16,6 +16,10 @@ import view.user.rewards.PanRewards;
 import view.user.settings.PanSettings;
 import view.user.statistics.PanStatistics;
 
+/**
+ * Panel principal de usuario que muestra estad\u00EDsticas, objetivos, premios y
+ * ajustes.
+ */
 public class PanUser extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -49,6 +53,11 @@ public class PanUser extends JPanel {
 
 	private JLabel lblUsername;
 
+	/**
+	 * Constructor de la clase PanUser.
+	 *
+	 * @param frmPrincipal Frame principal desde el cual se instanci\u00F3 este panel.
+	 */
 	public PanUser(FrmPrincipal frmPrincipal) {
 		this.mainFrame = frmPrincipal;
 
@@ -62,6 +71,9 @@ public class PanUser extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * Agrega los componentes visuales al panel.
+	 */
 	private void addComponents() {
 		// X Para salir
 		lblExit = new JLabel("X");
@@ -122,7 +134,7 @@ public class PanUser extends JPanel {
 		lblUserInfo.setBounds(0, 0, 200, 140);
 		add(lblUserInfo);
 
-		lblWindowText = new JLabel("ESTADÍSTICAS");
+		lblWindowText = new JLabel("ESTAD\u00CDSTICAS");
 		lblWindowText.setFont(new Font("Arial", Font.BOLD, 22));
 		lblWindowText.setBackground(new Color(204, 255, 204));
 		lblWindowText.setBounds(243, 0, 200, 50);
@@ -145,7 +157,7 @@ public class PanUser extends JPanel {
 		lblIconProfile.setBounds(20, 12, 16, 16);
 		panMenu.add(lblIconProfile);
 
-		lblProfile = new JLabel("ESTADÍSTICAS");
+		lblProfile = new JLabel("ESTAD\u00CDSTICAS");
 		lblProfile.setFont(new Font("Arial", Font.BOLD, 14));
 		lblProfile.setBounds(50, 13, 120, 13);
 		panMenu.add(lblProfile);
@@ -208,7 +220,6 @@ public class PanUser extends JPanel {
 		add(panEstadisticas);
 		panEstadisticas.setBounds(200, 50, 700, 450);
 		panEstadisticas.setVisible(true);
-		
 
 		panObjetivos = new PanGoals();
 		add(panObjetivos);
@@ -226,6 +237,9 @@ public class PanUser extends JPanel {
 		panAjustes.setVisible(false);
 	}
 
+	/**
+	 * Agrega los listeners para los componentes interactivos del panel.
+	 */
 	private void addListeners() {
 		CtrlPrincipal ctrl = new CtrlPrincipal();
 
@@ -242,15 +256,15 @@ public class PanUser extends JPanel {
 		// Controlar el hover en las opciones del menu
 		ctrlPU.addMouseListenerToPanel(panMenu);
 		ctrlPU.addMouseListenerToPanel(panMenu_1);
-		// Controlar el hover en las opciones del menu
 		ctrlPU.addMouseListenerToPanel(panMenu_2);
 		ctrlPU.addMouseListenerToPanel(panMenu_3);
 
 		// Controlar clics en las opciones del menu para cambiar el contenido
 		panMenu.addMouseListener(new MouseAdapter() {
 			@Override
+
 			public void mouseClicked(MouseEvent e) {
-				showPanel(panEstadisticas, "ESTADÍSTICAS");
+				showPanel(panEstadisticas, "ESTAD\u00CDSTICAS");
 			}
 		});
 		panMenu_1.addMouseListener(new MouseAdapter() {
@@ -273,6 +287,13 @@ public class PanUser extends JPanel {
 		});
 	}
 
+	/**
+	 * Muestra el panel especificado y actualiza el texto de la ventana
+	 * correspondiente.
+	 *
+	 * @param panel     Panel a mostrar.
+	 * @param panelName Nombre del panel para actualizar el texto de la ventana.
+	 */
 	private void showPanel(JPanel panel, String panelName) {
 		panEstadisticas.setVisible(false);
 		panObjetivos.setVisible(false);
@@ -280,32 +301,35 @@ public class PanUser extends JPanel {
 		panAjustes.setVisible(false);
 		panel.setVisible(true);
 		lblWindowText.setText(panelName);
-		
+
 		// Actualizar userId en PanGoals si es necesario
-        if (panel == panObjetivos) {
-            panObjetivos.updateUserId(DataUser.userId);
-        }
-        
-        if (panel == panEstadisticas) {
-        	try {
+		if (panel == panObjetivos) {
+			panObjetivos.updateUserId(DataUser.userId);
+		}
+
+		// Actualizar userId en PanEstadisticas si es necesario
+		if (panel == panEstadisticas) {
+			try {
 				panEstadisticas.updateUserId(DataUser.userId);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        	
-        }
+		}
 	}
 
+	/**
+	 * Actualiza el nombre de usuario mostrado en el panel.
+	 *
+	 * @param username Nombre de usuario a mostrar.
+	 */
 	public void updateUsername(String username) {
 		lblUsername.setText(username.toUpperCase());
-		
-	}
-	
-	public void updatePanelStats() {
-		panEstadisticas.updateUserId(DataUser.userId);
-		
 	}
 
-	
+	/**
+	 * Actualiza las estad\u00EDsticas del panel.
+	 */
+	public void updatePanelStats() {
+		panEstadisticas.updateUserId(DataUser.userId);
+	}
 }

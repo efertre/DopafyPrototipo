@@ -1,9 +1,18 @@
 package view.user;
 
+/**
+ * Clase que almacena datos estáticos del usuario actualmente logueado.
+ */
 public class DataUser {
-	public static String loggedInUsername;
-	public static int userId;
-
-	
+    
+    /**
+     * Nombre de usuario del usuario actualmente logueado.
+     */
+    public static String loggedInUsername;
+    
+    /**
+     * ID del usuario actualmente logueado.
+     */
+    public static int userId;
 
 }
