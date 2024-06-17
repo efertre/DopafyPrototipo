@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Font;
 
 public class PanRewards extends JPanel {
 
@@ -27,11 +28,15 @@ public class PanRewards extends JPanel {
 		// Cargar la imagen de fondo
 		ImageIcon iconBackground = new ImageIcon("resources/images/BG_USER.png");
 		setLayout(null);
+		
+		JLabel lblComingSoon = new JLabel("PRÓXIMAMENTE (NECESITA ESTAR CONECTADO)");
+		lblComingSoon.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 10));
+		lblComingSoon.setBounds(200, 205, 320, 13);
+		add(lblComingSoon);
 
 		// Crear el JLabel con imagen de fondo
 		background = new JLabel(iconBackground);
 		background.setBounds(0, 0, 700, 450);
 		add(background);
 	}
-
 }

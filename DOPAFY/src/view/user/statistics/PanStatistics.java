@@ -40,7 +40,7 @@ public class PanStatistics extends JPanel {
 
 	public void updateUserId(int userId2) {
 		this.userId = userId2;
-		System.out.println(userId + userId);
+		
 
 		// Limpiar los componentes existentes antes de actualizar
 		removeAll();

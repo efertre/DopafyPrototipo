@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class CtrlPrincipal {
+	
 
 	public void exit() {
 		System.exit(0);
@@ -22,6 +23,7 @@ public class CtrlPrincipal {
 		int respuesta = JOptionPane.showConfirmDialog(context, pregunta, "Salir", JOptionPane.YES_NO_OPTION,
 				JOptionPane.INFORMATION_MESSAGE);
 		if (respuesta == JOptionPane.YES_OPTION) {
+		
 			System.exit(0);
 		}
 	}

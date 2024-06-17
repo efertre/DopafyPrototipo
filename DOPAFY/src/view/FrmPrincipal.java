@@ -54,7 +54,7 @@ public class FrmPrincipal extends JFrame {
 		PanLogin panLogin = new PanLogin(this);
 		PanRegister panRegister = new PanRegister(this);
 		panUser = new PanUser(this);
-		PanAdmin panAdmin = new PanAdmin();
+		PanAdmin panAdmin = new PanAdmin(this);
 
 		// Añadir los paneles al mainPanel
 		mainPanel.setLayout(cardLayout);

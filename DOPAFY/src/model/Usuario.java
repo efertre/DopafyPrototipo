@@ -114,4 +114,9 @@ public class Usuario implements Serializable {
 		return "Usuario{" + "userId=" + userId + ", nombre='" + nombre + '\'' + ", email='" + email + '\''
 				+ ", password='" + password + '\'' + ", username='" + username + '\'' + ", esAdmin=" + esAdmin + '}';
 	}
+	
+	// Método para convertir el usuario a una línea CSV
+    public String toCSV() {
+        return userId + "," + nombre + "," + email + "," + username + "," + password + "," + esAdmin;
+    }
 }
